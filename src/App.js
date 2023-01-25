@@ -13,6 +13,10 @@ function App() {
 
   const [userDetails, setUserDetails] = useState({});
 
+  const [location, setLocation] = useState('');
+  const [gender, setGender] = useState('');
+  const [dateData, setDateData] = useState('');
+
   const usersCollectionRef = collection(db, "users")
 
   const handleClick =(id)=>{
@@ -39,7 +43,8 @@ function App() {
     const getUsers = async ()=>{
       const data = await getDocs(usersCollectionRef)
       // console.log(data);
-      setUsers(data.docs.map((doc)=>({...doc.data(), id: doc.id })))
+      const loadedUsers = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+      setUsers(loadedUsers)
     }
 
     getUsers()
@@ -56,7 +61,7 @@ function App() {
         <Sidenav></Sidenav>
         <Details userDetails={userDetails}></Details>
         <Picture userDetails={userDetails}></Picture>
-        <Events handleClick={handleClick} users={users}></Events>
+        <Events handleClick={handleClick} users={users} setUsers={setUsers}></Events>
       </div>
 
     </div>
